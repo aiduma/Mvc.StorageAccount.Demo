@@ -1,10 +1,10 @@
-name: Build and deploy .NET Core application to Web App azure-app-aiduma-vs
+name: Build and deploy .NET Core application to Web App StorageAccountDemo
 on:
   push:
     branches:
     - main
 env:
-  AZURE_WEBAPP_NAME: azure-app-aiduma-vs
+  AZURE_WEBAPP_NAME: StorageAccountDemo
   AZURE_WEBAPP_PACKAGE_PATH: .\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
@@ -44,5 +44,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.azure_app_aiduma_vs_2BD5 }}
+        publish-profile: ${{ secrets.StorageAccountDemo_B362 }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
