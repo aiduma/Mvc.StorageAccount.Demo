@@ -47,10 +47,10 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { industry = item.Industry, id = item.RowKey }) |
                 @Html.ActionLink("Details", "Details", new { industry = item.Industry, id = item.RowKey }) |
-                <form asp-action="Delete">
+                <form asp-action="Delete" style="display: inline-block;">
                     <input type="hidden" value="@item.RowKey" name="id" />
                     <input type="hidden" value="@item.Industry" name="industry" />
-                    <input type="submit" value="Delete" class="btn btn-danger" />
+                        <input type="submit" value="Delete" class="btn btn-danger" style="padding: 0px 10px;" />
                 </form>
             </td>
         </tr>
