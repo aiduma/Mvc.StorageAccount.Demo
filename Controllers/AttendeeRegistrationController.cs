@@ -88,6 +88,7 @@ namespace Mvc.StorageAccount.Demo.Controllers
             try
             {
                 attendeeEntity.PartitionKey = attendeeEntity.Industry;
+                attendeeEntity.ImageName = attendeeEntity.RowKey;
                 await _tableStorageService.UpsertAttendee(attendeeEntity);
 
                 if (formFile?.Length > 0)

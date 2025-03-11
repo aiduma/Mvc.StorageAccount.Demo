@@ -17,12 +17,17 @@ namespace Mvc.StorageAccount.Demo.Services
 
         public async Task<string> UploadBlob(IFormFile formFile, string imageName)
         {
-            var blobName = $"{imageName}{Path.GetExtension(formFile.FileName)}";
+            var blobName = $"{imageName}";
             var container = await GetBlobContainerClient();
             using var memoryStream = new MemoryStream();
 
             formFile.CopyTo(memoryStream);
             memoryStream.Position = 0;
+
+            if (formFile != null)
+            {
+                container.DeleteBlobIfExists(imageName);
+            }
 
             var client = await container.UploadBlobAsync(blobName, memoryStream, default);
             return blobName;
