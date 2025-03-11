@@ -9,6 +9,8 @@ namespace Mvc.StorageAccount.Demo.Data
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string Industry { get; set; }
+
+        public string ImageName { get; set; }
         public string PartitionKey { get; set; }
         public string RowKey { get; set; }
         public DateTimeOffset? Timestamp { get; set; }
