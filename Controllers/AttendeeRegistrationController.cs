@@ -24,12 +24,12 @@ namespace Mvc.StorageAccount.Demo.Controllers
         }
 
         // GET: AttendeeRegistratioController
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var data = await _tableStorageService.GetAttendees();
+            var data = _tableStorageService.GetAttendees();
             foreach(var item in data)
             {;
-                item.ImageName = await _blobStorageService.GetBlobUrl(item.ImageName);
+                item.ImageName = _blobStorageService.GetBlobUrl(item.ImageName);
             }
             return View(data);
         }
@@ -38,7 +38,7 @@ namespace Mvc.StorageAccount.Demo.Controllers
         public async Task<ActionResult> Details(string id, string industry)
         {
             var data = await _tableStorageService.GetAttendee(industry, id);
-            data.ImageName = await _blobStorageService.GetBlobUrl(data.ImageName);
+            data.ImageName = _blobStorageService.GetBlobUrl(data.ImageName);
             return View(data);
         }
 

@@ -6,7 +6,7 @@ namespace Mvc.StorageAccount.Demo.Services
     {
         Task DeleteAttendee(string industry, string id);
         Task<AttendeeEntity> GetAttendee(string industry, string id);
-        Task<IEnumerable<AttendeeEntity>> GetAttendees();
+        IEnumerable<AttendeeEntity> GetAttendees();
         Task UpsertAttendee(AttendeeEntity attendeeEntity);
     }
 }

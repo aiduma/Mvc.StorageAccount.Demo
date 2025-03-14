@@ -1,9 +1,47 @@
+using Azure.Data.Tables;
+using Azure.Storage.Queues;
+using Microsoft.Extensions.Azure;
 using Mvc.StorageAccount.Demo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var storageConnectionString = builder.Configuration["AzureStorage:StorageConnectionString"];
+builder.Services.AddAzureClients(builder => {
+    builder.AddBlobServiceClient(storageConnectionString);
+    builder.AddQueueServiceClient(storageConnectionString)
+    .ConfigureOptions(c =>
+    {
+        c.MessageEncoding = QueueMessageEncoding.Base64;
+    });
+    builder.AddTableServiceClient(storageConnectionString);
+});
+
+builder.Services.AddAzureClients(b =>
+{
+    b.AddClient<QueueClient, QueueClientOptions>((_, _, _) =>
+    {
+        return new QueueClient(
+            storageConnectionString,
+            builder.Configuration["AzureStorage:QueueName"],
+            new QueueClientOptions
+            {
+                MessageEncoding = QueueMessageEncoding.Base64
+            }
+        );
+    });
+
+    b.AddClient<TableClient, TableClientOptions>((_, _, _) =>
+    {
+        return new TableClient(
+            storageConnectionString,
+            builder.Configuration["AzureStorage:TableStorage"]
+        );
+    });
+});
+
 builder.Services.AddScoped<ITableStorageService, TableStorageService>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<IQueueService, QueuService>();
